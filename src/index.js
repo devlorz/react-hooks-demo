@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./styles.css";
 import Counter from "./components/Counter";
+import "./styles.css";
 
 function App() {
   return (
