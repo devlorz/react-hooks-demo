@@ -1,13 +1,10 @@
 import React from "react";
-import { render, fireEvent } from "react-testing-library";
+import { render, fireEvent, cleanup } from "react-testing-library";
 import Counter from "../Counter";
-
-beforeEach(() => {
-  window.localStorage.removeItem("count");
-});
 
 afterEach(() => {
   window.localStorage.removeItem("count");
+  cleanup();
 });
 
 test("counter increments the count", () => {
@@ -20,9 +17,11 @@ test("counter increments the count", () => {
 
 test("read and update localStorage", () => {
   window.localStorage.setItem("count", 3);
-  const { container } = render(<Counter />);
+  const { container, rerender } = render(<Counter />);
   const button = container.firstChild;
   expect(button.textContent).toBe("3");
   fireEvent.click(button);
   expect(button.textContent).toBe("4");
+  rerender(<Counter />);
+  expect(window.localStorage.getItem("count")).toBe("4");
 });
